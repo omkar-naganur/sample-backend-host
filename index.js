@@ -11,11 +11,11 @@ const router = express.Router();
 const app = express()
 app.use(express.json());
 
-router.get('/', function (req, res) {
+app.get('/', function (req, res) {
   res.send('<h1>Hello World<h1>')
 })
 
-router.post("/register",async(req,res)=>{
+app.post("/register",async(req,res)=>{
     try {
         const {name,email,password,phoneNumber,role,addressOfuser} = req.body;
         if(!name.trim() || !email.trim()){
