@@ -18,9 +18,7 @@ app.get('/', function (req, res) {
 app.post("/register",async(req,res)=>{
     try {
         const {name,email,password,phoneNumber,role,addressOfuser} = req.body;
-        if(!name.trim() || !email.trim()){
-            return res.status(400).send("Name is required"); 
-        }
+
         const user = new User({name,email,password,phoneNumber,role,address:addressOfuser});
         await user.save()
         return res.status(201).send({
@@ -37,6 +35,12 @@ app.post("/register",async(req,res)=>{
 // app.use("/.netlify/functions/app", router);
 // const handler = serverless(app,{provider:'aws'})
 app.listen(process.env.PORT || 3000,()=>{
-console.log("Server is running");
-connectToDb()
+
+    try {
+        
+        console.log("Server is running");
+        connectToDb()
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
 })
